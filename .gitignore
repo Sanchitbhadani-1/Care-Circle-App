@@ -1,0 +1,28 @@
+# --- Python ---
+# Compiled Python files (auto-generated, not needed)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Virtual environment (the "lunchbox" — never upload this) ---
+venv/
+.venv/
+env/
+
+# --- Django ---
+# The local database file (can hold private data)
+db.sqlite3
+db.sqlite3-journal
+
+# Collected static files (auto-generated when you deploy)
+/staticfiles/
+
+# --- Secrets (passwords, keys — NEVER upload) ---
+.env
+*.env
+
+# --- Editor / OS junk ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
