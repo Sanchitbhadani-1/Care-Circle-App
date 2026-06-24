@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
+# Use our custom email-based user instead of Django's default username one.
+AUTH_USER_MODEL = 'accounts.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
