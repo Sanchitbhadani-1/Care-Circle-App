@@ -3,12 +3,14 @@ from django.contrib.auth import login
 from .models import User
 from django.contrib.auth import authenticate, login, logout
 
-
+#Load home page
 def home(request):
     return render(request, "accounts/home.html")
 
-
+#Logic behind signing upo
 def signup(request):
+
+    #Sends data pack to server if user is trying to signup
     if request.method == "POST":
         email = request.POST["email"]
         password = request.POST["password"]
@@ -52,7 +54,7 @@ def login_view(request):
     #Loads up the page
     return render(request, "accounts/login.html")
 
-
+#If user logs out, redirect them to home page
 def logout_view(request):
     logout(request)
     return redirect("/")

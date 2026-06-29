@@ -4,13 +4,17 @@
     <title>Log In — Care Circle</title>
 </head>
 <body>
+    <!-- Page heading -->
     <h1>Log in to Care Circle</h1>
 
+    <!-- If the login failed, show the error message in red -->
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
 
+    <!-- The login form: sends the email + password to the server -->
     <form method="post">
+        <!-- Security token that proves the form came from my own site -->
         {% csrf_token %}
         <p>
             <label>Email: <input type="email" name="email" required></label>

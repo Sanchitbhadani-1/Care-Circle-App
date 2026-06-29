@@ -4,13 +4,16 @@
     <title>Sign Up — Care Circle</title>
 </head>
 <body>
-    <h1>Create your account</h1an>
+    <!-- Page heading -->
+    <h1>Create your account</h1>
 
-    {% if error %}
+    <!-- If something went wrong show it in red
         <p style="color: red;">{{ error }}</p>
     {% endif %}
 
+    <!-- The signup form: sends the new email + password to the server -->
     <form method="post">
+        <!-- Security token that proves the form came from my own site -->
         {% csrf_token %}
         <p>
             <label>Email: <input type="email" name="email" required></label>
