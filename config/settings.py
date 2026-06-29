@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # --- Our own apps ---
+    # --- My own apps ---
     'accounts',
+    'circles'
 ]
 
 # Use our custom email-based user instead of Django's default username one.
