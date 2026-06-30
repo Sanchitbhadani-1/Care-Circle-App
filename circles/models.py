@@ -18,3 +18,28 @@ class CareCircle(models.Model):
     #Return the name of a circle
     def __str__(self):
         return self.name
+
+class Membership(models.Model):
+    ROLE_CHOICES = [
+        ("owner", "Owner"),
+        ("caregiver", "Caregiver"),
+        ("senior", "Senior"),
+    ]
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="memberships",
+    )
+    circle = models.ForeignKey(
+        CareCircle,
+        on_delete=models.CASCADE,
+        related_name="memberships",
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="caregiver")
+
+    class Meta:
+        unique_together = ("user", "circle")   # no duplicate user+circle rows
+
+    def __str__(self):
+        return f"{self.user.email} — {self.role} in {self.circle.name}"
