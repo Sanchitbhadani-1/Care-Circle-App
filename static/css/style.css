@@ -40,22 +40,35 @@ body {
     font-weight: 600;
 }
 
-/* ===== Hero section ===== */
+/* ===== Hero section (two columns: text + image) ===== */
 .hero {
-    display: flex;                    /* turn on flexbox */
-    align-items: center;             /* center vertically */
-    justify-content: center;         /* center horizontally */
-    text-align: center;
-    min-height: calc(100vh - 70px);  /* fill the screen minus the header */
-    padding: 40px 20px;
+    display: flex;
+    align-items: center;
+    gap: 48px;                    /* space between the text and the image */
+    max-width: 1100px;
+    margin: 0 auto;               /* center the whole hero on the page */
+    padding: 60px 24px;
+    flex-wrap: wrap;              /* let columns stack on narrow screens */
 }
-.hero-content { max-width: 620px; }   /* keep text lines a comfy width */
-.hero h1 {
-    font-size: 44px;                  /* big, bold headline */
+.hero-text {
+    flex: 1;                      /* take an equal share of the width */
+    min-width: 300px;            /* ...but never get skinnier than this */
+}
+.hero-text h1 {
+    font-size: 44px;
     line-height: 1.2;
     margin-bottom: 16px;
 }
-.hero .tagline { font-size: 18px; margin-bottom: 32px; }
+.hero-image {
+    flex: 1;
+    min-width: 300px;
+}
+.hero-image img {
+    width: 100%;                  /* fill its column */
+    border-radius: var(--radius); /* rounded corners */
+    box-shadow: var(--shadow);    /* soft shadow */
+    display: block;
+}
 
 /* ===== Card (used by the form pages) ===== */
 .container {

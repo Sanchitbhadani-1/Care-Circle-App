@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <!-- Top header bar -->
     <header class="navbar">
         <div class="logo">Care Circle</div>
         <nav>
@@ -19,15 +18,14 @@
         </nav>
     </header>
 
-    <!-- Hero section: fills the screen, centered -->
     <main class="hero">
-        <div class="hero-content">
+        <!-- LEFT column: the text -->
+        <div class="hero-text">
             <h1>Care for the ones you love, together.</h1>
             <p class="tagline">
                 Care Circle helps your whole family coordinate care for a senior —
                 tasks, reminders, and peace of mind, all in one place.
             </p>
-
             {% if user.is_authenticated %}
                 <p>Logged in as <strong>{{ user.email }}</strong></p>
                 <a class="button" href="/circles/new/">Create a care circle</a>
@@ -35,6 +33,11 @@
                 <a class="button" href="/signup/">Get started</a>
                 <a class="button secondary" href="/login/">I already have an account</a>
             {% endif %}
+        </div>
+
+        <!-- RIGHT column: the image -->
+        <div class="hero-image">
+            <img src="{% static 'img/hero.jpg' %}" alt="A family caring for a senior loved one">
         </div>
     </main>
 </body>
