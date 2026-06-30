@@ -19,23 +19,30 @@ class CareCircle(models.Model):
     def __str__(self):
         return self.name
 
-class Membership(models.Model):
+class Membership(models.Model): #Defines the membership model
+    
+    #The different roles a user can be in a circle
     ROLE_CHOICES = [
         ("owner", "Owner"),
         ("caregiver", "Caregiver"),
         ("senior", "Senior"),
     ]
 
+    #Connects the user
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="memberships",
     )
+    
+    #Connects the circle with the user
     circle = models.ForeignKey(
         CareCircle,
         on_delete=models.CASCADE,
         related_name="memberships",
     )
+
+    #Assigns user's role in the circle
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="caregiver")
 
     class Meta:

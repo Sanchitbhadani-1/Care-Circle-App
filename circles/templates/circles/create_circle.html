@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Circle — Care Circle</title>
+</head>
+<body>
+    <!-- Page heading -->
+    <h1>Create a care circle</h1>
+
+    <!-- Form to make a new circle -->
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label>Circle name: <input type="text" name="name" required></label>
+        </p>
+        <button type="submit">Create</button>
+    </form>
+</body>
+</html>

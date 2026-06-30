@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from accounts import views
+from circles import views as circle_views
 
 urlpatterns = [
     path('admin/', admin.site.urls), #Go to admin page
@@ -24,4 +25,5 @@ urlpatterns = [
     path('signup/', views.signup), #Go to signup page
      path('login/', views.login_view), #Go to login page
     path('logout/', views.logout_view), #Go to logout page
+    path('circles/new/', circle_views.create_circle), #Go to create a circle page
 ]

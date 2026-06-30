@@ -12,7 +12,10 @@
     {% if user.is_authenticated %}
         <!-- Logged in: greet them and give them a way to log out -->
         <p>Logged in as {{ user.email }}</p>
+        <a href="/circles/new/">Create a care circle</a>
+        <br>
         <a href="/logout/">Log out</a>
+        
     {% else %}
         <!-- Not logged in: offer login or signup links -->
         <a href="/login/">Log in</a> |

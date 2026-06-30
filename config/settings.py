@@ -122,3 +122,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Where @login_required sends people that need to log in
+LOGIN_URL = "/login/"
