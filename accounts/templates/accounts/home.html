@@ -1,25 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Care Circle</title>
+    <!-- Connect our stylesheet to this page -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <!-- Welcome heading and tagline -->
-    <h1>Welcome to Care Circle</h1>
-    <p>A simple way for families to care for the people they love.</p>
+    <div class="container">
+        <h1>Welcome to Care Circle</h1>
+        <p class="tagline">A simple way for families to care for the people they love.</p>
 
-    <!-- Show different things depending on whether the person is logged in -->
-    {% if user.is_authenticated %}
-        <!-- Logged in: greet them and give them a way to log out -->
-        <p>Logged in as {{ user.email }}</p>
-        <a href="/circles/new/">Create a care circle</a>
-        <br>
-        <a href="/logout/">Log out</a>
-        
-    {% else %}
-        <!-- Not logged in: offer login or signup links -->
-        <a href="/login/">Log in</a> |
-        <a href="/signup/">Sign up</a>
-    {% endif %}
+        {% if user.is_authenticated %}
+            <p>Logged in as <strong>{{ user.email }}</strong></p>
+            <a class="button" href="/circles/new/">Create a care circle</a>
+            <a class="button secondary" href="/logout/">Log out</a>
+        {% else %}
+            <a class="button" href="/login/">Log in</a>
+            <a class="button secondary" href="/signup/">Sign up</a>
+        {% endif %}
+    </div>
 </body>
 </html>
