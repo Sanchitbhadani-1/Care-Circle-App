@@ -1,31 +1,66 @@
-/* ============================================
-   THEME — teal healthcare look (like the reference)
-   ============================================ */
+/* ===== THEME ===== */
 :root {
-    --primary: #20b2a6;        /* teal — the main accent */
-    --primary-dark: #178f86;   /* darker teal for hover */
-    --page-bg: #eef5f3;        /* very light mint-gray background */
-    --card-bg: #ffffff;        /* white cards */
-    --text: #1f2d3d;           /* dark slate text */
-    --muted: #6b7a90;          /* muted gray for secondary text */
-    --radius: 16px;            /* how rounded things are */
-    --shadow: 0 8px 24px rgba(32, 178, 166, 0.14);  /* soft teal-tinted shadow */
+    --primary: #20b2a6;
+    --primary-dark: #178f86;
+    --page-bg: #eef5f3;
+    --card-bg: #ffffff;
+    --text: #1f2d3d;
+    --muted: #6b7a90;
+    --radius: 16px;
+    --shadow: 0 8px 24px rgba(32, 178, 166, 0.14);
 }
 
-/* ===== The whole page ===== */
+/* ===== Base page ===== */
 body {
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--page-bg);
     color: var(--text);
     margin: 0;
-    padding: 40px 20px;
     line-height: 1.6;
 }
 
-/* ===== A centered white "card" ===== */
+/* ===== Top header bar ===== */
+.navbar {
+    display: flex;                    /* lay children in a row */
+    justify-content: space-between;   /* logo far left, links far right */
+    align-items: center;              /* vertically center them */
+    padding: 16px 32px;
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+}
+.navbar nav a { margin-left: 14px; }   /* space between the nav links */
+.nav-link {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* ===== Hero section ===== */
+.hero {
+    display: flex;                    /* turn on flexbox */
+    align-items: center;             /* center vertically */
+    justify-content: center;         /* center horizontally */
+    text-align: center;
+    min-height: calc(100vh - 70px);  /* fill the screen minus the header */
+    padding: 40px 20px;
+}
+.hero-content { max-width: 620px; }   /* keep text lines a comfy width */
+.hero h1 {
+    font-size: 44px;                  /* big, bold headline */
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+.hero .tagline { font-size: 18px; margin-bottom: 32px; }
+
+/* ===== Card (used by the form pages) ===== */
 .container {
     max-width: 460px;
-    margin: 0 auto;
+    margin: 40px auto;
     background-color: var(--card-bg);
     padding: 36px;
     border-radius: var(--radius);
@@ -33,15 +68,8 @@ body {
 }
 
 /* ===== Headings & text ===== */
-h1 {
-    color: var(--primary);
-    margin-top: 0;
-    font-size: 28px;
-}
-.tagline {
-    color: var(--muted);
-    margin-bottom: 28px;
-}
+h1 { color: var(--primary); margin-top: 0; }
+.tagline { color: var(--muted); }
 
 /* ===== Buttons ===== */
 .button {
@@ -52,18 +80,9 @@ h1 {
     border-radius: 10px;
     text-decoration: none;
     font-weight: 600;
-    margin-top: 10px;
+    margin: 8px 6px 0 0;
     transition: background-color 0.2s ease;
 }
-.button:hover {
-    background-color: var(--primary-dark);
-}
-
-/* A lighter "secondary" button */
-.button.secondary {
-    background-color: #e6f4f1;   /* light teal tint */
-    color: var(--primary-dark);
-}
-.button.secondary:hover {
-    background-color: #d4ece7;
-}
+.button:hover { background-color: var(--primary-dark); }
+.button.secondary { background-color: #e6f4f1; color: var(--primary-dark); }
+.button.secondary:hover { background-color: #d4ece7; }
