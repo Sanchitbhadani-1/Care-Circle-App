@@ -145,3 +145,59 @@ h1 { color: var(--primary); margin-top: 0; }
     transform: translateY(-6px);                    /* lift the card up 6px */
     box-shadow: 0 14px 32px rgba(32, 178, 166, 0.22);  /* deepen the shadow */
 }
+
+/* ===== How it works section ===== */
+.how-section {
+    background-color: var(--card-bg);   /* white band to separate it from the page */
+    padding: 80px 24px;
+    text-align: center;
+}
+.steps {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+.step {
+    flex: 1;
+    min-width: 220px;
+}
+.step-number {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px auto;      /* center the circle, space below it */
+    background-color: var(--primary);
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 50%;            /* turns the square into a circle */
+    display: flex;
+    align-items: center;           /* center the number vertically */
+    justify-content: center;       /* center the number horizontally */
+}
+.step h3 { color: var(--text); margin-bottom: 8px; }
+.step p { color: var(--muted); margin: 0; }
+
+/* ===== Trust / privacy section ===== */
+.trust-section {
+    padding: 80px 24px;       /* sits on the mint page background */
+    text-align: center;
+}
+.trust-content {
+    max-width: 640px;
+    margin: 0 auto;           /* center + keep the text a comfy width */
+}
+.trust-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+.trust-section h2 {
+    color: var(--primary);
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+.trust-section p {
+    color: var(--muted);
+    font-size: 18px;
+}
