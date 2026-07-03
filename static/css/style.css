@@ -201,3 +201,57 @@ h1 { color: var(--primary); margin-top: 0; }
     color: var(--muted);
     font-size: 18px;
 }
+
+/* ===== Final call-to-action band ===== */
+.cta-section {
+    background-color: var(--primary);   /* full-width teal band */
+    color: white;
+    text-align: center;
+    padding: 72px 24px;
+}
+.cta-section h2 {
+    color: white;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+.cta-section p {
+    font-size: 18px;
+    margin-bottom: 28px;
+}
+.cta-button {
+    background-color: white;      /* white button pops on the teal band */
+    color: var(--primary);
+    font-size: 18px;
+    padding: 14px 32px;
+}
+.cta-button:hover {
+    background-color: #e6f4f1;
+}
+
+/* ===== Footer ===== */
+.footer {
+    background-color: var(--text);   /* dark footer */
+    color: #cbd5e0;
+    text-align: center;
+    padding: 48px 24px;
+}
+.footer-brand {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+}
+.footer-links {
+    margin: 16px 0;
+}
+.footer-links a {
+    color: #cbd5e0;
+    text-decoration: none;
+    margin: 0 12px;
+}
+.footer-links a:hover { color: white; }
+.footer-copy {
+    font-size: 14px;
+    color: #8a99ab;
+    margin-top: 16px;
+}
