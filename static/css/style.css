@@ -22,7 +22,7 @@ body {
 /* ===== Top header bar ===== */
 .navbar {
     display: flex;                    /* lay children in a row */
-    justify-content: space-between;   /* logo far left, links far right */
+    justify-content: space-between;   /* logo left, links middle, auth right */
     align-items: center;              /* vertically center them */
     padding: 16px 32px;
     background-color: var(--card-bg);
@@ -33,42 +33,40 @@ body {
     font-weight: 700;
     color: var(--primary);
 }
-.navbar nav a { margin-left: 14px; }   /* space between the nav links */
+.nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+    margin: 0 14px;
+}
+.nav-links a:hover { color: var(--primary); }
+.nav-auth a { margin-left: 12px; }
 .nav-link {
     text-decoration: none;
     color: var(--text);
     font-weight: 600;
 }
 
-/* ===== Hero section (two columns: text + image) ===== */
-.hero {
+/* ===== Hero banner: full background image + card on top ===== */
+.hero-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+                      url("../img/hero.webp");
+    background-size: cover;
+    background-position: center;
+    min-height: 600px;
     display: flex;
     align-items: center;
-    gap: 48px;                    /* space between the text and the image */
-    max-width: 1100px;
-    margin: 0 auto;               /* center the whole hero on the page */
-    padding: 60px 24px;
-    flex-wrap: wrap;              /* let columns stack on narrow screens */
+    justify-content: flex-end;   /* 👈 push the card to the RIGHT, like Oaks */
+    padding: 40px 60px;          /* a bit more side padding from the edge */
 }
-.hero-text {
-    flex: 1;                      /* take an equal share of the width */
-    min-width: 300px;            /* ...but never get skinnier than this */
+.hero-card {
+    background-color: white;
+    max-width: 540px;            /* 👈 wider box */
+    padding: 44px;               /* 👈 more breathing room inside */
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
-.hero-text h1 {
-    font-size: 44px;
-    line-height: 1.2;
-    margin-bottom: 16px;
-}
-.hero-image {
-    flex: 1;
-    min-width: 300px;
-}
-.hero-image img {
-    width: 100%;                  /* fill its column */
-    border-radius: var(--radius); /* rounded corners */
-    box-shadow: var(--shadow);    /* soft shadow */
-    display: block;
-}
+.hero-card h1 { font-size: 36px; line-height: 1.2; margin-bottom: 14px; }
 
 /* ===== Card (used by the form pages) ===== */
 .container {

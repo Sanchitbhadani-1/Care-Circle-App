@@ -6,25 +6,38 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+    <!-- Header: logo | placeholder links | sign up/log in -->
     <header class="navbar">
         <div class="logo">Care Circle</div>
-        <nav>
+
+        <nav class="nav-links">
+            <a href="#">Communities</a>
+            <a href="#">Care</a>
+            <a href="#">Services</a>
+            <a href="#">About</a>
+        </nav>
+
+        <div class="nav-auth">
             {% if user.is_authenticated %}
                 <a class="button secondary" href="/logout/">Log out</a>
             {% else %}
                 <a class="nav-link" href="/login/">Log in</a>
                 <a class="button" href="/signup/">Sign up</a>
             {% endif %}
-        </nav>
+        </div>
     </header>
 
-    <main class="hero">
-        <!-- LEFT column: the text -->
-        <div class="hero-text">
-            <h1>Care for the ones you love, together.</h1>
+    <!-- Full-width hero: background image with a card on top -->
+    <section class="hero-banner">
+        <div class="hero-card">
+            <h1>Empowered with dignity, cared for with love.</h1>
             <p class="tagline">
-                Care Circle helps your whole family coordinate care for a senior —
-                tasks, reminders, and peace of mind, all in one place.
+                Care Circle brings your whole family together to care for the people who once
+                cared for you. Coordinate tasks, track health, and stay connected — all in one place.
+            </p>
+            <p class="tagline">
+                From medication reminders to shared schedules, everyone stays in sync — so your
+                loved one is always safe, supported, and surrounded by the people who love them most.
             </p>
             {% if user.is_authenticated %}
                 <p>Logged in as <strong>{{ user.email }}</strong></p>
@@ -34,11 +47,6 @@
                 <a class="button secondary" href="/login/">I already have an account</a>
             {% endif %}
         </div>
-
-        <!-- RIGHT column: the image -->
-        <div class="hero-image">
-            <img src="{% static 'img/hero.jpg' %}" alt="A family caring for a senior loved one">
-        </div>
-    </main>
+    </section>
 </body>
 </html>
