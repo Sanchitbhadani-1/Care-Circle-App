@@ -97,3 +97,51 @@ h1 { color: var(--primary); margin-top: 0; }
 .button:hover { background-color: var(--primary-dark); }
 .button.secondary { background-color: #e6f4f1; color: var(--primary-dark); }
 .button.secondary:hover { background-color: #d4ece7; }
+
+/* ===== Features section ===== */
+.features-section {
+    max-width: 1100px;
+    margin: 0 auto;           /* center the whole section */
+    padding: 80px 24px;       /* generous space above & below */
+    text-align: center;
+}
+.section-title {
+    font-size: 32px;
+    color: var(--text);
+    margin-bottom: 48px;
+}
+.features {
+    display: flex;
+    flex-wrap: wrap;          /* cards drop to a new row on small screens */
+    gap: 24px;                /* space between cards */
+}
+.feature-card {
+    flex: 1;                  /* each card takes an equal share of the row */
+    min-width: 220px;         /* ...but wraps once it'd get narrower than this */
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px 24px;
+}
+.feature-icon {
+    font-size: 40px;          /* big emoji icon */
+    margin-bottom: 12px;
+}
+.feature-card h3 {
+    color: var(--primary);
+    margin: 0 0 8px 0;
+}
+.feature-card p {
+    color: var(--muted);
+    margin: 0;
+}
+
+
+.feature-card {
+    /* ...your existing styles... */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;  /* smooth the change */
+}
+.feature-card:hover {
+    transform: translateY(-6px);                    /* lift the card up 6px */
+    box-shadow: 0 14px 32px rgba(32, 178, 166, 0.22);  /* deepen the shadow */
+}
