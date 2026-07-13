@@ -1,19 +1,38 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>New Circle — Care Circle</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
-    <!-- Page heading -->
-    <h1>Create a care circle</h1>
+<body class="auth-page">
 
-    <!-- Form to make a new circle -->
-    <form method="post">
-        {% csrf_token %}
-        <p>
-            <label>Circle name: <input type="text" name="name" required></label>
-        </p>
-        <button type="submit">Create</button>
-    </form>
+    <div class="auth-card">
+        <!-- Logo links back home -->
+        <a class="auth-logo" href="/">Care Circle</a>
+
+        <h1>Create a care circle</h1>
+        <p class="auth-subtitle">Set up a private space to coordinate care for your loved one.</p>
+
+        <!-- If something went wrong, show it in red -->
+        {% if error %}
+            <p class="form-error">{{ error }}</p>
+        {% endif %}
+
+        <!-- Form to make a new circle -->
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+
+            <label class="field">
+                <span class="field-label">Circle name</span>
+                <input type="text" name="name" placeholder="e.g. Grandma Rose's Circle" required>
+            </label>
+
+            <button type="submit" class="button auth-submit">Create circle</button>
+        </form>
+
+        <p class="auth-alt"><a href="/">← Back to home</a></p>
+    </div>
+
 </body>
 </html>
