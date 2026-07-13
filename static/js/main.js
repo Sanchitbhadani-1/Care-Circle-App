@@ -39,3 +39,39 @@ window.addEventListener("scroll", function () {
 backToTop.addEventListener("click", function () {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+// =====================================================
+// 3. Scroll reveal
+// -----------------------------------------------------
+// Fade + slide elements in as they scroll into view,
+// using an IntersectionObserver — the browser notifies
+// us the moment a watched element enters the screen.
+// =====================================================
+
+// The elements we want to animate in.
+const revealItems = document.querySelectorAll(
+    ".feature-card, .step, .section-title, .trust-content"
+);
+
+// Give each one the hidden starting state. We do this in JS (not the
+// HTML) so that if JavaScript is ever off, nothing hides — the page
+// just shows normally.
+revealItems.forEach(function (el) {
+    el.classList.add("reveal");
+});
+
+// Create the watcher. Its function runs whenever a watched element
+// crosses into view.
+const revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");   // slide it in
+            revealObserver.unobserve(entry.target);  // reveal once, then stop watching
+        }
+    });
+}, { threshold: 0.15 });   // fire when ~15% of the element is on screen
+
+// Tell the watcher which elements to keep an eye on.
+revealItems.forEach(function (el) {
+    revealObserver.observe(el);
+});

@@ -311,3 +311,22 @@ h1 { color: var(--primary); margin-top: 0; }
 #back-to-top:hover {
     background-color: var(--primary-dark);
 }
+
+/* --- 3. Scroll reveal --- */
+/* JS adds ".reveal" to elements that should animate in. They start
+   nudged down and transparent... */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+/* ...then JS adds ".visible" when they scroll into view, settling them. */
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+/* Keep your feature-card hover-lift working after a card is revealed
+   (more specific, so it wins over ".reveal.visible" while hovering). */
+.feature-card.reveal.visible:hover {
+    transform: translateY(-6px);
+}
