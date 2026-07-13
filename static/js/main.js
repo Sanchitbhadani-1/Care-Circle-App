@@ -17,3 +17,25 @@ window.addEventListener("scroll", function () {
         navbar.classList.remove("scrolled");  // back at the top → full size
     }
 });
+
+// =====================================================
+// 2. Back-to-top button
+// -----------------------------------------------------
+// Reveal the button after scrolling down a bit, and
+// smoothly glide back to the top when it's clicked.
+// =====================================================
+const backToTop = document.querySelector("#back-to-top");
+
+// Show/hide it based on how far down the page we are.
+window.addEventListener("scroll", function () {
+    if (window.scrollY > 300) {
+        backToTop.classList.add("show");
+    } else {
+        backToTop.classList.remove("show");
+    }
+});
+
+// When clicked, scroll the window back to the very top.
+backToTop.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});

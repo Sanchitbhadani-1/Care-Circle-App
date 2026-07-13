@@ -280,3 +280,34 @@ h1 { color: var(--primary); margin-top: 0; }
 .navbar.scrolled .logo {
     font-size: 18px;                               /* down from 22px */
 }
+
+/* --- 2. Back-to-top button --- */
+/* Fixed to the bottom-right corner, floating above everything. */
+#back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;                            /* a circle */
+    background-color: var(--primary);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;                               /* show the hand on hover */
+    box-shadow: var(--shadow);
+    z-index: 200;                                  /* above the sticky navbar */
+    /* Start hidden; JS adds ".show" to reveal it. */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);                   /* nudged down while hidden */
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);                      /* slides up into place */
+}
+#back-to-top:hover {
+    background-color: var(--primary-dark);
+}
