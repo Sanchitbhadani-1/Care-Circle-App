@@ -50,7 +50,7 @@ backToTop.addEventListener("click", function () {
 
 // The elements we want to animate in.
 const revealItems = document.querySelectorAll(
-    ".feature-card, .step, .section-title, .trust-content"
+    ".feature-row, .step, .section-title, .trust-content"
 );
 
 // Give each one the hidden starting state. We do this in JS (not the

@@ -341,3 +341,80 @@ h1 { color: var(--primary); margin-top: 0; }
 .feature-card.reveal.visible:hover {
     transform: translateY(-6px);
 }
+
+/* ==========================================================
+   FEATURE ROWS  (alternating image + text — replaces the cards)
+   ========================================================== */
+.feature-rows {
+    display: flex;
+    flex-direction: column;   /* stack the rows vertically */
+    gap: 72px;                 /* generous space between rows */
+    text-align: left;          /* override the section's centering */
+}
+.feature-row {
+    display: flex;
+    align-items: center;       /* vertically center image & text */
+    gap: 48px;
+    flex-wrap: wrap;
+}
+.feature-row:nth-child(even) {
+    flex-direction: row-reverse;   /* flip every OTHER row */
+}
+.feature-row__media,
+.feature-row__text {
+    flex: 1;                   /* share the row equally */
+    min-width: 280px;          /* ...until too narrow, then wrap */
+}
+/* The placeholder image block (swap for a real <img> later). */
+.feature-row__media {
+    aspect-ratio: 4 / 3;
+    background-color: #dbe6ef;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.feature-row__placeholder {
+    font-size: 72px;
+}
+/* When you add a real photo: <img class="feature-row__img" ...> */
+.feature-row__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;         /* fill the block without stretching */
+    display: block;
+}
+.feature-row .pill {
+    display: inline-block;
+    background-color: #e6eef5;
+    color: var(--primary-dark);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 999px;      /* fully rounded pill */
+    margin-bottom: 16px;
+}
+.feature-row__text h2 {
+    font-size: 30px;
+    color: var(--text);
+    line-height: 1.25;
+    margin: 0 0 14px 0;
+}
+.feature-row__text h2 em {
+    font-style: italic;        /* the Oaks-style accent word */
+    color: var(--primary);
+}
+.feature-row__text p {
+    color: var(--muted);
+    font-size: 17px;
+    margin: 0;
+}
+/* On phones, stack every row image-on-top (no reversing). */
+@media (max-width: 760px) {
+    .feature-row,
+    .feature-row:nth-child(even) {
+        flex-direction: column;
+    }
+}
