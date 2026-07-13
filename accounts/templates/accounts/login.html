@@ -1,28 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Log In — Care Circle</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
-    <!-- Page heading -->
-    <h1>Log in to Care Circle</h1>
+<body class="auth-page">
 
-    <!-- If the login failed, show the error message in red -->
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
+    <div class="auth-card">
+        <!-- Logo links back home -->
+        <a class="auth-logo" href="/">Care Circle</a>
 
-    <!-- The login form: sends the email + password to the server -->
-    <form method="post">
-        <!-- Security token that proves the form came from my own site -->
-        {% csrf_token %}
-        <p>
-            <label>Email: <input type="email" name="email" required></label>
-        </p>
-        <p>
-            <label>Password: <input type="password" name="password" required></label>
-        </p>
-        <button type="submit">Log in</button>
-    </form>
+        <h1>Welcome back</h1>
+        <p class="auth-subtitle">Log in to your family's care circle.</p>
+
+        <!-- If the login failed, show the error message in red -->
+        {% if error %}
+            <p class="form-error">{{ error }}</p>
+        {% endif %}
+
+        <!-- The login form: sends the email + password to the server -->
+        <form method="post" class="auth-form">
+            <!-- Security token that proves the form came from my own site -->
+            {% csrf_token %}
+
+            <label class="field">
+                <span class="field-label">Email</span>
+                <input type="email" name="email" placeholder="you@example.com" required>
+            </label>
+
+            <label class="field">
+                <span class="field-label">Password</span>
+                <input type="password" name="password" placeholder="Your password" required>
+            </label>
+
+            <button type="submit" class="button auth-submit">Log in</button>
+        </form>
+
+        <p class="auth-alt">New to Care Circle? <a href="/signup/">Create an account</a></p>
+    </div>
+
 </body>
 </html>
