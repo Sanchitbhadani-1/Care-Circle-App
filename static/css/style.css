@@ -1,13 +1,13 @@
 /* ===== THEME ===== */
 :root {
-    --primary: #20b2a6;
-    --primary-dark: #178f86;
-    --page-bg: #eef5f3;
+    --primary: #3f6f9c;
+    --primary-dark: #315880;
+    --page-bg: #eef2f6;
     --card-bg: #ffffff;
     --text: #1f2d3d;
     --muted: #6b7a90;
     --radius: 16px;
-    --shadow: 0 8px 24px rgba(32, 178, 166, 0.14);
+    --shadow: 0 8px 24px rgba(63, 111, 156, 0.14);
 }
 
 /* ===== Base page ===== */
@@ -95,8 +95,8 @@ h1 { color: var(--primary); margin-top: 0; }
     transition: background-color 0.2s ease;
 }
 .button:hover { background-color: var(--primary-dark); }
-.button.secondary { background-color: #e6f4f1; color: var(--primary-dark); }
-.button.secondary:hover { background-color: #d4ece7; }
+.button.secondary { background-color: #e6eef5; color: var(--primary-dark); }
+.button.secondary:hover { background-color: #d6e3ef; }
 
 /* ===== Features section ===== */
 .features-section {
