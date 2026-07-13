@@ -255,3 +255,28 @@ h1 { color: var(--primary); margin-top: 0; }
     color: #8a99ab;
     margin-top: 16px;
 }
+
+/* ==========================================================
+   SCROLL INTERACTIONS  (these states are switched on by JS)
+   ========================================================== */
+
+/* --- 1. Shrinking header --- */
+/* Pin the navbar to the top so it stays visible while scrolling. */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;                                  /* sit above the page content */
+    transition: padding 0.25s ease, box-shadow 0.25s ease;
+}
+.logo {
+    transition: font-size 0.25s ease;              /* smoothly resize the wordmark */
+}
+/* JS adds ".scrolled" once the user scrolls down; this is the shrunk look. */
+.navbar.scrolled {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);    /* a bit more lift when floating */
+}
+.navbar.scrolled .logo {
+    font-size: 18px;                               /* down from 22px */
+}
