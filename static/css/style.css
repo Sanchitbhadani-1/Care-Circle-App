@@ -418,3 +418,109 @@ h1 { color: var(--primary); margin-top: 0; }
         flex-direction: column;
     }
 }
+
+/* ==========================================================
+   AUTH PAGES  (signup / login) — centered card on a soft backdrop
+   ========================================================== */
+.auth-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    background: linear-gradient(160deg, #e4edf4 0%, var(--page-bg) 60%);
+}
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+.auth-logo {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    margin-bottom: 22px;
+}
+.auth-card h1 {
+    font-size: 26px;
+    color: var(--text);
+    margin: 0 0 8px 0;
+}
+.auth-subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0 0 26px 0;
+}
+.auth-form {
+    text-align: left;   /* labels/inputs align left inside the centered card */
+}
+.field {
+    display: block;
+    margin-bottom: 16px;
+}
+.field-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+.field input {
+    width: 100%;
+    box-sizing: border-box;      /* padding stays inside the width */
+    padding: 12px 14px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text);
+    background-color: #f7fafc;
+    border: 1px solid #d6dee6;
+    border-radius: 10px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(63, 111, 156, 0.18);   /* soft focus ring */
+}
+.auth-submit {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 13px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 8px 0 0 0;
+    border: none;
+    cursor: pointer;
+}
+.form-error {
+    background-color: #fdecea;
+    color: #b3261e;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    text-align: left;
+    margin: 0 0 20px 0;
+}
+.auth-alt {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 22px 0 0 0;
+}
+.auth-alt a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+.auth-alt a:hover {
+    text-decoration: underline;
+}

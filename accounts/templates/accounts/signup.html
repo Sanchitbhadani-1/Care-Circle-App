@@ -1,27 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Sign Up — Care Circle</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
-    <!-- Page heading -->
-    <h1>Create your account</h1>
+<body class="auth-page">
 
-    <!-- If something went wrong show it in red
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
+    <div class="auth-card">
+        <!-- Logo links back home -->
+        <a class="auth-logo" href="/">Care Circle</a>
 
-    <!-- The signup form: sends the new email + password to the server -->
-    <form method="post">
-        <!-- Security token that proves the form came from my own site -->
-        {% csrf_token %}
-        <p>
-            <label>Email: <input type="email" name="email" required></label>
-        </p>
-        <p>
-            <label>Password: <input type="password" name="password" required></label>
-        </p>
-        <button type="submit">Sign up</button>
-    </form>
+        <h1>Create your account</h1>
+        <p class="auth-subtitle">Start your family's circle of care in just a minute.</p>
+
+        <!-- If something went wrong, show it in red -->
+        {% if error %}
+            <p class="form-error">{{ error }}</p>
+        {% endif %}
+
+        <!-- The signup form: sends the new email + password to the server -->
+        <form method="post" class="auth-form">
+            <!-- Security token that proves the form came from my own site -->
+            {% csrf_token %}
+
+            <label class="field">
+                <span class="field-label">Email</span>
+                <input type="email" name="email" placeholder="you@example.com" required>
+            </label>
+
+            <label class="field">
+                <span class="field-label">Password</span>
+                <input type="password" name="password" placeholder="Create a password" required>
+            </label>
+
+            <button type="submit" class="button auth-submit">Create account</button>
+        </form>
+
+        <p class="auth-alt">Already have an account? <a href="/login/">Log in</a></p>
+    </div>
+
 </body>
 </html>
