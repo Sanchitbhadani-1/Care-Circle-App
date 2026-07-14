@@ -26,8 +26,8 @@ def signup(request):
         # Log the new user in right away
         login(request, user)
 
-        # Send them to the home page
-        return redirect("/")
+        # Send them straight to create their first circle
+        return redirect("/circles/new/")
 
     # If its not a post but instead just a visit, show the empty form.
     return render(request, "accounts/signup.html")
@@ -46,7 +46,7 @@ def login_view(request):
         #Decide what to do if it finds a match or not
         if user is not None:
             login(request, user)
-            return redirect("/")
+            return redirect("/dashboard/")
         else:
             return render(request, "accounts/login.html",
                           {"error": "Wrong email or password."})

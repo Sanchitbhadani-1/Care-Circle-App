@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard — Care Circle</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="app-body">
+
+    <!-- App top bar: brand | section nav | log out -->
+    <header class="app-header">
+        <a class="app-brand" href="/dashboard/">Care Circle</a>
+
+        <nav class="app-nav">
+            <a class="app-nav__link active" href="/dashboard/">Dashboard</a>
+            <a class="app-nav__link" href="#">Medications</a>
+            <a class="app-nav__link" href="#">Sleep</a>
+            <a class="app-nav__link" href="#">Meals</a>
+            <a class="app-nav__link" href="#">Tasks</a>
+            <a class="app-nav__link" href="#">Care notes</a>
+            <a class="app-nav__link" href="#">Members</a>
+        </nav>
+
+        <a class="app-logout" href="/logout/">Log out</a>
+    </header>
+
+    <!-- Dashboard content -->
+    <main class="app-main">
+
+        <p class="app-eyebrow">{{ circle.name }}</p>
+        <h1 class="app-welcome">Welcome back, {{ user.first_name|default:user.email }}</h1>
+        <p class="app-sub">
+            Here's your circle's hub. You're the
+            <span class="role-badge">{{ my_role|title }}</span> of this circle.
+        </p>
+
+        <!-- Module hub: each card links to a section we'll build next -->
+        <div class="module-grid">
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">💊</span>
+                <span class="module-card__title">Medications</span>
+                <span class="module-card__desc">Track doses and mark them taken.</span>
+            </a>
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">🍽️</span>
+                <span class="module-card__title">Meals</span>
+                <span class="module-card__desc">Log meals and appetite.</span>
+            </a>
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">😴</span>
+                <span class="module-card__title">Sleep</span>
+                <span class="module-card__desc">Record hours and quality.</span>
+            </a>
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">💧</span>
+                <span class="module-card__title">Hydration</span>
+                <span class="module-card__desc">Keep fluids on track.</span>
+            </a>
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">🩺</span>
+                <span class="module-card__title">Vitals</span>
+                <span class="module-card__desc">Blood pressure, weight, and more.</span>
+            </a>
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">🙂</span>
+                <span class="module-card__title">Mood</span>
+                <span class="module-card__desc">Daily wellbeing check-ins.</span>
+            </a>
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">✅</span>
+                <span class="module-card__title">Tasks</span>
+                <span class="module-card__desc">Assign and track to-dos.</span>
+            </a>
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">📝</span>
+                <span class="module-card__title">Care notes</span>
+                <span class="module-card__desc">Hand-off notes between caregivers.</span>
+            </a>
+
+            <a class="module-card" href="#">
+                <span class="module-card__icon">👥</span>
+                <span class="module-card__title">Members</span>
+                <span class="module-card__desc">Manage who's in the circle.</span>
+            </a>
+
+        </div>
+    </main>
+
+</body>
+</html>

@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls), #Go to admin page
     path('', views.home), #Go to home page
     path('signup/', views.signup), #Go to signup page
-     path('login/', views.login_view), #Go to login page
+    path('login/', views.login_view), #Go to login page
     path('logout/', views.logout_view), #Go to logout page
     path('circles/new/', circle_views.create_circle), #Go to create a circle page
+    path('dashboard/', circle_views.dashboard), #Go to the circle dashboard
 ]
