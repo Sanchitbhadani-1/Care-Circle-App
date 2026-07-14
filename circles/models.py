@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import date
 
 #Create the CareCircle model
 class CareCircle(models.Model):
@@ -50,3 +51,29 @@ class Membership(models.Model): #Defines the membership model
 
     def __str__(self):
         return f"{self.user.email} — {self.role} in {self.circle.name}"
+
+
+class SeniorProfile(models.Model):
+    # Each circle has exactly ONE senior — the person being cared for.
+    circle = models.OneToOneField(
+        CareCircle,
+        on_delete=models.CASCADE,
+        related_name="senior",
+    )
+    name = models.CharField(max_length=100)
+    date_of_birth = models.DateField(null=True, blank=True)
+    relationship = models.CharField(max_length=50, blank=True)   # e.g. "Grandmother"
+    allergies = models.CharField(max_length=200, blank=True)
+    about = models.TextField(blank=True)                          # short status / notes
+
+    def __str__(self):
+        return f"{self.name} ({self.circle.name})"
+
+    @property
+    def age(self):
+        # Calculated on the fly from the birth date — NOT stored in the database.
+        if not self.date_of_birth:
+            return None
+        today = date.today()
+        had_birthday = (today.month, today.day) >= (self.date_of_birth.month, self.date_of_birth.day)
+        return today.year - self.date_of_birth.year - (0 if had_birthday else 1)
