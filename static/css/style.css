@@ -650,3 +650,175 @@ h1 { color: var(--primary); margin-top: 0; }
     font-size: 14px;
     line-height: 1.5;
 }
+
+/* ----- Dashboard: senior summary card ----- */
+.senior-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 24px;
+    margin-bottom: 32px;
+}
+.senior-card--empty { justify-content: space-between; }
+.senior-avatar {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 26px;
+    font-weight: 700;
+    flex: 0 0 auto;
+}
+.senior-info { flex: 1; min-width: 0; }
+.senior-name {
+    font-family: var(--font-head);
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--text);
+}
+.senior-meta {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--muted);
+}
+.senior-facts {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+/* ----- Dashboard: today's snapshot tiles ----- */
+.dash-label {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    margin: 0 0 14px 0;
+}
+.snapshot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 36px;
+}
+.snap-tile {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 18px;
+}
+.snap-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+.snap-value {
+    font-family: var(--font-head);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text);
+}
+.snap-value--empty { color: #c2ccd6; }
+
+/* ----- Dashboard: activity + care-team panels ----- */
+.dash-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.panel {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 24px;
+}
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+.panel-title {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+}
+.app-chip {
+    display: inline-block;
+    background-color: var(--primary);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 13px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+.app-chip:hover { background-color: var(--primary-dark); }
+.empty-state {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+}
+.member-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.member {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+.member-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #8aa6bf;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex: 0 0 auto;
+}
+.member-avatar--owner { background-color: var(--primary); }
+.member-name {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.member-role {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    background-color: var(--page-bg);
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+.member-role--owner {
+    color: var(--primary-dark);
+    background-color: #e6eef5;
+}
+
+@media (max-width: 720px) {
+    .snapshot { grid-template-columns: repeat(2, 1fr); }
+    .dash-cols { grid-template-columns: 1fr; }
+}

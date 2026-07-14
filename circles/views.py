@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import CareCircle, Membership
+from .models import CareCircle, Membership, SeniorProfile
 
 
 @login_required #Requires that the user is logged in
@@ -33,5 +33,7 @@ def dashboard(request):
     context = {
         "circle": circle,
         "my_role": membership.role,
+        "senior": SeniorProfile.objects.filter(circle=circle).first(),   
+        "members": circle.memberships.all()                             
     }
     return render(request, "circles/dashboard.html", context)

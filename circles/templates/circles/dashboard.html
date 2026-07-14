@@ -30,68 +30,64 @@
         <p class="app-eyebrow">{{ circle.name }}</p>
         <h1 class="app-welcome">Welcome back, {{ user.first_name|default:user.email }}</h1>
         <p class="app-sub">
-            Here's your circle's hub. You're the
-            <span class="role-badge">{{ my_role|title }}</span> of this circle.
+            Here's today's snapshot for your circle. You're the
+            <span class="role-badge">{{ my_role|title }}</span>.
         </p>
 
-        <!-- Module hub: each card links to a section we'll build next -->
-        <div class="module-grid">
+        <!-- Senior summary: who this circle is caring for -->
+        {% if senior %}
+        <section class="senior-card">
+            <div class="senior-avatar">{{ senior.name|slice:":1"|upper }}</div>
+            <div class="senior-info">
+                <div class="senior-name">{{ senior.name }}<span class="senior-meta">{% if senior.age %} &middot; {{ senior.age }} yrs{% endif %}{% if senior.relationship %} &middot; {{ senior.relationship }}{% endif %}</span></div>
+                <div class="senior-facts">{% if senior.allergies %}Allergies: {{ senior.allergies }}{% else %}No allergies on file{% endif %}{% if senior.about %} &middot; {{ senior.about }}{% endif %}</div>
+            </div>
+        </section>
+        {% else %}
+        <section class="senior-card senior-card--empty">
+            <div class="senior-info">
+                <div class="senior-name">No senior added yet</div>
+                <div class="senior-facts">Add the person this circle is here to care for.</div>
+            </div>
+            <a class="app-chip" href="#">Add senior</a>
+        </section>
+        {% endif %}
 
-            <a class="module-card" href="#">
-                <span class="module-card__icon">💊</span>
-                <span class="module-card__title">Medications</span>
-                <span class="module-card__desc">Track doses and mark them taken.</span>
-            </a>
+        <!-- Today's snapshot: values light up as the trackers get built -->
+        <p class="dash-label">Today's snapshot</p>
+        <div class="snapshot">
+            <div class="snap-tile"><div class="snap-label">Medications</div><div class="snap-value snap-value--empty">—</div></div>
+            <div class="snap-tile"><div class="snap-label">Sleep</div><div class="snap-value snap-value--empty">—</div></div>
+            <div class="snap-tile"><div class="snap-label">Meals</div><div class="snap-value snap-value--empty">—</div></div>
+            <div class="snap-tile"><div class="snap-label">Hydration</div><div class="snap-value snap-value--empty">—</div></div>
+        </div>
 
-            <a class="module-card" href="#">
-                <span class="module-card__icon">🍽️</span>
-                <span class="module-card__title">Meals</span>
-                <span class="module-card__desc">Log meals and appetite.</span>
-            </a>
+        <!-- Recent activity + Care team -->
+        <div class="dash-cols">
 
-            <a class="module-card" href="#">
-                <span class="module-card__icon">😴</span>
-                <span class="module-card__title">Sleep</span>
-                <span class="module-card__desc">Record hours and quality.</span>
-            </a>
+            <section class="panel">
+                <div class="panel-head"><span class="panel-title">Recent activity</span></div>
+                <p class="empty-state">Nothing logged yet. As caregivers record meds, meals, and notes, they'll appear here.</p>
+            </section>
 
-            <a class="module-card" href="#">
-                <span class="module-card__icon">💧</span>
-                <span class="module-card__title">Hydration</span>
-                <span class="module-card__desc">Keep fluids on track.</span>
-            </a>
-
-            <a class="module-card" href="#">
-                <span class="module-card__icon">🩺</span>
-                <span class="module-card__title">Vitals</span>
-                <span class="module-card__desc">Blood pressure, weight, and more.</span>
-            </a>
-
-            <a class="module-card" href="#">
-                <span class="module-card__icon">🙂</span>
-                <span class="module-card__title">Mood</span>
-                <span class="module-card__desc">Daily wellbeing check-ins.</span>
-            </a>
-
-            <a class="module-card" href="#">
-                <span class="module-card__icon">✅</span>
-                <span class="module-card__title">Tasks</span>
-                <span class="module-card__desc">Assign and track to-dos.</span>
-            </a>
-
-            <a class="module-card" href="#">
-                <span class="module-card__icon">📝</span>
-                <span class="module-card__title">Care notes</span>
-                <span class="module-card__desc">Hand-off notes between caregivers.</span>
-            </a>
-
-            <a class="module-card" href="#">
-                <span class="module-card__icon">👥</span>
-                <span class="module-card__title">Members</span>
-                <span class="module-card__desc">Manage who's in the circle.</span>
-            </a>
+            <section class="panel">
+                <div class="panel-head">
+                    <span class="panel-title">Care team</span>
+                    <a class="app-chip" href="#">+ Invite</a>
+                </div>
+                <div class="member-list">
+                    {% for m in members %}
+                    <div class="member">
+                        <div class="member-avatar {% if m.role == 'owner' %}member-avatar--owner{% endif %}">{{ m.user.email|slice:":1"|upper }}</div>
+                        <div class="member-name">{{ m.user.email }}</div>
+                        <span class="member-role {% if m.role == 'owner' %}member-role--owner{% endif %}">{{ m.get_role_display }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
 
         </div>
+
     </main>
 
 </body>
