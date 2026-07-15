@@ -822,3 +822,96 @@ h1 { color: var(--primary); margin-top: 0; }
     .snapshot { grid-template-columns: repeat(2, 1fr); }
     .dash-cols { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================
+   TRACKER PAGE  (reusable: sleep, hydration, weight...)
+   ========================================================== */
+.tracker-back {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+.tracker-back:hover { text-decoration: underline; }
+
+.tracker-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.tracker-icon { font-size: 44px; line-height: 1; flex: 0 0 auto; }
+.tracker-title { font-size: 32px; color: var(--text); margin: 0; }
+.tracker-sub { color: var(--muted); font-size: 15px; margin: 4px 0 0 0; }
+
+/* Log-entry form card */
+.tracker-form {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 40px;
+}
+.tracker-form__fields {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.tracker-form__value { flex: 1; min-width: 140px; }
+.tracker-form__note  { flex: 2; min-width: 200px; }
+
+/* History list */
+.entry-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.entry {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 16px 20px;
+}
+.entry-value {
+    font-family: var(--font-head);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary);
+    flex: 0 0 auto;
+    min-width: 92px;
+}
+.entry-unit {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--muted);
+}
+.entry-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+.entry-note { font-size: 15px; color: var(--text); }
+.entry-by { font-size: 13px; color: var(--muted); }
+
+/* Trend chart card */
+.chart-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px 22px;
+    margin-bottom: 40px;
+}
+.chart-canvas-wrap {
+    position: relative;   /* Chart.js sizes the canvas to this box */
+    height: 260px;
+}

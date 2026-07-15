@@ -8,7 +8,7 @@ def home(request):
     return render(request, "accounts/home.html")
 
 #Logic behind signing upo
-def signup(request):
+def signup(request): 
 
     #Sends data pack to server if user is trying to signup
     if request.method == "POST":

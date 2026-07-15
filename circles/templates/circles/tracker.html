@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ config.label }} — Care Circle</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="app-body">
+
+    <!-- App top bar (same as the dashboard) -->
+    <header class="app-header">
+        <a class="app-brand" href="/dashboard/">Care Circle</a>
+
+        <nav class="app-nav">
+            <a class="app-nav__link" href="/dashboard/">Dashboard</a>
+            <a class="app-nav__link" href="#">Medications</a>
+            <a class="app-nav__link {% if metric == 'sleep' %}active{% endif %}" href="/track/sleep/">Sleep</a>
+            <a class="app-nav__link" href="#">Meals</a>
+            <a class="app-nav__link" href="#">Tasks</a>
+            <a class="app-nav__link" href="#">Care notes</a>
+            <a class="app-nav__link" href="#">Members</a>
+        </nav>
+
+        <a class="app-logout" href="/logout/">Log out</a>
+    </header>
+
+    <main class="app-main">
+
+        <a class="tracker-back" href="/dashboard/">&larr; Back to dashboard</a>
+
+        <!-- Tracker heading: icon + name + who it's for -->
+        <div class="tracker-head">
+            <span class="tracker-icon">{{ config.icon }}</span>
+            <div>
+                <h1 class="tracker-title">{{ config.label }}</h1>
+                <p class="tracker-sub">
+                    {% if circle.senior %}Tracking for {{ circle.senior.name }}{% else %}{{ circle.name }}{% endif %}{% if entries %} &middot; last logged {{ entries.0.value }} {{ config.unit }}{% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!-- Log a new entry -->
+        <form method="post" class="tracker-form">
+            {% csrf_token %}
+            <div class="tracker-form__fields">
+                <label class="field tracker-form__value">
+                    <span class="field-label">{{ config.label }} ({{ config.unit }})</span>
+                    <input type="number" step="any" name="value" placeholder="e.g. 7.5" required>
+                </label>
+                <label class="field tracker-form__note">
+                    <span class="field-label">Note (optional)</span>
+                    <input type="text" name="note" placeholder="e.g. slept well, woke once">
+                </label>
+            </div>
+            <button type="submit" class="button">Log {{ config.label|lower }}</button>
+        </form>
+
+        <!-- Trend chart (only shown once there's data) -->
+        {% if entries %}
+        <div class="chart-card">
+            {{ labels|json_script:"chart-labels" }}
+            {{ values|json_script:"chart-values" }}
+            <div class="chart-canvas-wrap">
+                <canvas id="trackerChart"></canvas>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- History -->
+        <p class="dash-label">History</p>
+        {% if entries %}
+            <ul class="entry-list">
+                {% for entry in entries %}
+                <li class="entry">
+                    <span class="entry-value">{{ entry.value }}<span class="entry-unit"> {{ config.unit }}</span></span>
+                    <div class="entry-detail">
+                        {% if entry.note %}<span class="entry-note">{{ entry.note }}</span>{% endif %}
+                        <span class="entry-by">{{ entry.logged_by.email|default:"Someone" }} &middot; {{ entry.logged_at|date:"M j, Y · g:i A" }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-state">No entries yet — log the first one above.</p>
+        {% endif %}
+
+    </main>
+
+    {% if entries %}
+    <!-- Load Chart.js from a CDN, then draw the line graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        (function () {
+            // Read the data our template printed into the page as JSON.
+            const labels = JSON.parse(document.getElementById("chart-labels").textContent);
+            const values = JSON.parse(document.getElementById("chart-values").textContent);
+
+            new Chart(document.getElementById("trackerChart"), {
+                type: "line",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "{{ config.label }} ({{ config.unit }})",
+                        data: values,
+                        borderColor: "#3f6f9c",
+                        backgroundColor: "rgba(63, 111, 156, 0.12)",
+                        fill: true,
+                        tension: 0.3,
+                        borderWidth: 2,
+                        pointBackgroundColor: "#3f6f9c",
+                        pointRadius: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        })();
+    </script>
+    {% endif %}
+
+</body>
+</html>

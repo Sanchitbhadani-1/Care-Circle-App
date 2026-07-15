@@ -2,8 +2,14 @@ from django.shortcuts import render
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import CareCircle, Membership, SeniorProfile
+from django.http import Http404
+from .models import CareCircle, Membership, SeniorProfile, LogEntry
 
+METRICS = {
+    "sleep":     {"label": "Sleep",     "unit": "hours", "icon": "😴"},
+    "hydration": {"label": "Hydration", "unit": "cups",  "icon": "💧"},
+    "weight":    {"label": "Weight",    "unit": "lbs",   "icon": "🩺"},
+}
 
 @login_required #Requires that the user is logged in
 def create_circle(request):
@@ -22,7 +28,7 @@ def create_circle(request):
 
 @login_required
 def dashboard(request):
-    # Find a circle this user belongs to (just their first one, for now).
+    # Find a circle this user belongs to (just their first one).
     membership = Membership.objects.filter(user=request.user).first()
 
     # Not in any circle yet? Send them to create one.
@@ -37,3 +43,43 @@ def dashboard(request):
         "members": circle.memberships.all()                             
     }
     return render(request, "circles/dashboard.html", context)
+
+
+@login_required
+def tracker(request, metric):
+    # Is this a real tracker? Look it up in our config.
+    config = METRICS.get(metric)
+    if config is None:
+        raise Http404("Unknown tracker")
+
+    # Same "find the user's circle" as the dashboard.
+    membership = Membership.objects.filter(user=request.user).first()
+    if membership is None:
+        return redirect("/circles/new/")
+    circle = membership.circle
+
+    # If they submitted the form, save a new entry.
+    if request.method == "POST":
+        LogEntry.objects.create(
+            circle=circle,
+            metric=metric,
+            value=float(request.POST["value"]),
+            note=request.POST.get("note", ""),
+            logged_by=request.user,
+        )
+        return redirect(f"/track/{metric}/")   # reload the page fresh
+
+    # Otherwise, show the form + history for this metric.
+    entries = LogEntry.objects.filter(circle=circle, metric=metric)
+    chart_entries = entries.order_by("logged_at")
+    labels = [e.logged_at.strftime("%b %d") for e in chart_entries]
+    values = [e.value for e in chart_entries]
+    context = {
+        "circle": circle,
+        "metric": metric,
+        "config": config,
+        "entries": entries,
+        "labels": labels,
+        "values": values,
+    }
+    return render(request, "circles/tracker.html", context)
