@@ -860,6 +860,7 @@ h1 { color: var(--primary); margin-top: 0; }
     flex-wrap: wrap;
 }
 .tracker-form__value { flex: 1; min-width: 140px; }
+.tracker-form__when  { flex: 1; min-width: 190px; }
 .tracker-form__note  { flex: 2; min-width: 200px; }
 
 /* History list */

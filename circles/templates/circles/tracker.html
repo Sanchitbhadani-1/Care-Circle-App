@@ -47,6 +47,10 @@
                     <span class="field-label">{{ config.label }} ({{ config.unit }})</span>
                     <input type="number" step="any" name="value" placeholder="e.g. 7.5" required>
                 </label>
+                <label class="field tracker-form__when">
+                    <span class="field-label">When</span>
+                    <input type="datetime-local" name="logged_at" value="{% now 'Y-m-d\TH:i' %}">
+                </label>
                 <label class="field tracker-form__note">
                     <span class="field-label">Note (optional)</span>
                     <input type="text" name="note" placeholder="e.g. slept well, woke once">

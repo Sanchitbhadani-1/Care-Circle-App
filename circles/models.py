@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from datetime import date
+from django.utils import timezone
 
 #Create the CareCircle model
 class CareCircle(models.Model):
@@ -96,7 +97,7 @@ class LogEntry(models.Model):
         null=True,
         related_name="log_entries",
     )
-    logged_at = models.DateTimeField(auto_now_add=True)
+    logged_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ["-logged_at"]                  # newest first, automatically

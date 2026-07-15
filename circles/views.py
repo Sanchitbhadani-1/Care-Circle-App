@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import CareCircle, Membership, SeniorProfile, LogEntry
+from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 
 METRICS = {
     "sleep":     {"label": "Sleep",     "unit": "hours", "icon": "😴"},
@@ -60,14 +62,22 @@ def tracker(request, metric):
 
     # If they submitted the form, save a new entry.
     if request.method == "POST":
+        # Use the date/time the user picked; fall back to now if it's blank.
+        when = parse_datetime(request.POST.get("logged_at", ""))
+        if when is None:
+            when = timezone.now()
+        elif timezone.is_naive(when):
+            when = timezone.make_aware(when)
+
         LogEntry.objects.create(
             circle=circle,
             metric=metric,
             value=float(request.POST["value"]),
             note=request.POST.get("note", ""),
             logged_by=request.user,
+            logged_at=when,          
         )
-        return redirect(f"/track/{metric}/")   # reload the page fresh
+        return redirect(f"/track/{metric}/")
 
     # Otherwise, show the form + history for this metric.
     entries = LogEntry.objects.filter(circle=circle, metric=metric)
