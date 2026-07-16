@@ -121,3 +121,38 @@ class CareNote(models.Model):
 
     def __str__(self):
         return f"Note by {self.author} in {self.circle.name}"
+    
+class Medication(models.Model):
+    circle = models.ForeignKey(CareCircle, on_delete=models.CASCADE, related_name="medications")
+    name = models.CharField(max_length=100)                  # e.g. "Metformin"
+    dosage = models.CharField(max_length=100, blank=True)    # e.g. "500 mg"
+    instructions = models.CharField(max_length=200, blank=True)  # e.g. "Twice daily with food"
+    is_active = models.BooleanField(default=True)            # hide instead of delete
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["name"]                                  # alphabetical med list
+
+    def __str__(self):
+        return f"{self.name} ({self.dosage})"
+
+
+
+class DoseLog(models.Model):
+    medication = models.ForeignKey(Medication, on_delete=models.CASCADE, related_name="doses")
+    given_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="doses_given",
+    )
+
+    amount_given = models.CharField(max_length=100, blank=True)   # actual amount this dose
+    
+    given_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["-given_at"]                             # newest dose first
+
+    def __str__(self):
+        return f"{self.medication.name} dose at {self.given_at}"

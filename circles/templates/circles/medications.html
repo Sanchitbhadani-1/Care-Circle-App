@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medications — Care Circle</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="app-body">
+
+    {% include "circles/_app_nav.html" with active="medications" %}
+
+    <main class="app-main">
+
+        <p class="app-eyebrow">{{ circle.name }}</p>
+        <h1 class="app-welcome">Medications</h1>
+        <p class="app-sub">The medications {{ circle.senior.name|default:"the senior" }} takes — mark each dose as it's given.</p>
+
+        <!-- Add a medication -->
+        <section class="panel add-med">
+            <div class="panel-head"><span class="panel-title">Add a medication</span></div>
+            <form method="post" class="add-med-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="add">
+                <label class="field add-med-form__name">
+                    <span class="field-label">Name</span>
+                    <input type="text" name="name" placeholder="e.g. Metformin" required>
+                </label>
+                <label class="field add-med-form__dosage">
+                    <span class="field-label">Dosage</span>
+                    <input type="text" name="dosage" placeholder="e.g. 500 mg">
+                </label>
+                <label class="field add-med-form__instructions">
+                    <span class="field-label">Instructions</span>
+                    <input type="text" name="instructions" placeholder="e.g. Twice daily with food">
+                </label>
+                <button type="submit" class="button">Add medication</button>
+            </form>
+        </section>
+
+        <!-- The medication list -->
+        {% if medications %}
+        <div class="med-list">
+            {% for med in medications %}
+            <article class="med-card">
+                <div class="med-head">
+                    <span class="med-name">{{ med.name }}</span>
+                    {% if med.dosage %}<span class="med-dosage">{{ med.dosage }}</span>{% endif %}
+                </div>
+                {% if med.instructions %}<p class="med-instructions">{{ med.instructions }}</p>{% endif %}
+
+                <!-- Mark a dose taken (amount pre-filled with the standard dosage, editable) -->
+                <form method="post" class="dose-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="dose">
+                    <input type="hidden" name="medication_id" value="{{ med.id }}">
+                    <input type="text" name="amount_given" class="dose-amount" value="{{ med.dosage }}" placeholder="amount">
+                    <button type="submit" class="button">Mark taken</button>
+                </form>
+
+                <!-- Recent doses (newest first) -->
+                <div class="dose-history">
+                    <span class="dose-history__label">Recent doses</span>
+                    {% for dose in med.doses.all|slice:":5" %}
+                    <div class="dose-row">
+                        <span class="dose-amount-val">{{ dose.amount_given|default:"—" }}</span>
+                        <span class="dose-meta">{{ dose.given_at|date:"M j, g:i A" }}{% if dose.given_by %} · {{ dose.given_by.email }}{% endif %}</span>
+                    </div>
+                    {% empty %}
+                    <span class="dose-none">No doses logged yet.</span>
+                    {% endfor %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty-state">No medications yet — add the first one above.</p>
+        {% endif %}
+
+    </main>
+
+</body>
+</html>

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import CareCircle, Membership, SeniorProfile, LogEntry, CareNote
+from .models import CareCircle, Membership, SeniorProfile, LogEntry, CareNote, Medication, DoseLog
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from django.contrib.auth import get_user_model
@@ -225,5 +225,42 @@ def care_notes(request):
             CareNote.objects.create(circle=circle, body=body, author=request.user)
         return redirect("/notes/")
 
-    notes = circle.notes.all()       # reverse accessor from related_name="notes"
+    notes = circle.notes.all()  # reverse accessor from related_name="notes"
     return render(request, "circles/care_notes.html", {"circle": circle, "notes": notes})
+
+
+@login_required
+def medications(request):
+    membership = Membership.objects.filter(user=request.user).first()
+    if membership is None:
+        return redirect("/circles/new/")
+    circle = membership.circle
+
+    if request.method == "POST":
+        action = request.POST.get("action")
+
+        if action == "add":
+            name = request.POST.get("name", "").strip()
+            if name:                                  # ignore blank names
+                Medication.objects.create(
+                    circle=circle,
+                    name=name,
+                    dosage=request.POST.get("dosage", ""),
+                    instructions=request.POST.get("instructions", ""),
+                )
+
+        elif action == "dose":
+            med = Medication.objects.filter(
+                id=request.POST.get("medication_id"),
+                circle=circle,                        # scope to this circle for safety
+            ).first()
+            if med:
+                amount = request.POST.get("amount_given", "").strip() or med.dosage
+                DoseLog.objects.create(medication=med, given_by=request.user, amount_given=amount)
+        return redirect("/medications/")
+
+    meds = circle.medications.filter(is_active=True)  # only active meds
+    return render(request, "circles/medications.html", {
+        "circle": circle,
+        "medications": meds,
+    })

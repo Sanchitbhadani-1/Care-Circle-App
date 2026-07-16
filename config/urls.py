@@ -31,4 +31,5 @@ urlpatterns = [
     path('senior/', circle_views.edit_senior), #Add or edit the senior profile
     path('members/', circle_views.members), #Manage circle members
     path('notes/', circle_views.care_notes), #Care notes / handoff log
+    path('medications/', circle_views.medications), #Manage medications and doses
 ]

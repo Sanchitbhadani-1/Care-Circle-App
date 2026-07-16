@@ -1091,3 +1091,100 @@ h1 { color: var(--primary); margin-top: 0; }
     line-height: 1.6;
     color: var(--text);
 }
+
+/* Medications */
+.add-med { margin-bottom: 32px; }
+.add-med-form {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+.add-med-form .field { margin-bottom: 0; }
+.add-med-form .button { margin: 0; }
+.add-med-form__name         { flex: 1; min-width: 150px; }
+.add-med-form__dosage       { flex: 1; min-width: 110px; }
+.add-med-form__instructions { flex: 2; min-width: 200px; }
+
+.med-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.med-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 20px 22px;
+}
+.med-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+.med-name {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+}
+.med-dosage {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    background-color: #e6eef5;
+    padding: 2px 10px;
+    border-radius: 999px;
+}
+.med-instructions {
+    margin: 6px 0 14px 0;
+    font-size: 14px;
+    color: var(--muted);
+}
+.dose-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.dose-amount {
+    width: 120px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text);
+    background-color: #f7fafc;
+    border: 1px solid #d6dee6;
+    border-radius: 10px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.dose-amount:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(63, 111, 156, 0.18);
+}
+.dose-form .button { margin: 0; }
+.dose-history {
+    border-top: 1px solid var(--page-bg);
+    padding-top: 12px;
+}
+.dose-history__label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+.dose-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 3px 0;
+    font-size: 13px;
+}
+.dose-amount-val { color: var(--text); font-weight: 600; }
+.dose-meta { color: var(--muted); white-space: nowrap; }
+.dose-none { font-size: 13px; color: var(--muted); }
