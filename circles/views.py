@@ -6,6 +6,8 @@ from django.http import Http404
 from .models import CareCircle, Membership, SeniorProfile, LogEntry
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 METRICS = {
     "sleep":     {"label": "Sleep",     "unit": "hours", "icon": "😴"},
@@ -38,13 +40,47 @@ def dashboard(request):
         return redirect("/circles/new/")
 
     circle = membership.circle
+
+    # Which trackers to pin on the dashboard (stays fixed even as METRICS grows)
+    DASHBOARD_METRICS = ["sleep", "hydration", "weight"]
+
+    # Latest reading for each of those → the snapshot tiles
+    snapshot = []
+    for key in DASHBOARD_METRICS:
+        cfg = METRICS[key]
+        latest = LogEntry.objects.filter(circle=circle, metric=key).first()
+        snapshot.append({
+            "key": key,
+            "icon": cfg["icon"],
+            "label": cfg["label"],
+            "unit": cfg["unit"],
+            "value": latest.value if latest else None,
+            "has_value": latest is not None,
+        })
+
+    # Newest few entries across all trackers → recent activity
+    recent = []
+    for e in LogEntry.objects.filter(circle=circle)[:6]:
+        cfg = METRICS.get(e.metric, {})
+        recent.append({
+            "icon": cfg.get("icon", "•"),
+            "label": cfg.get("label", e.metric),
+            "value": e.value,
+            "unit": cfg.get("unit", ""),
+            "by": e.logged_by.email if e.logged_by else "Someone",
+            "at": e.logged_at,
+        })
+
     context = {
         "circle": circle,
         "my_role": membership.role,
-        "senior": SeniorProfile.objects.filter(circle=circle).first(),   
-        "members": circle.memberships.all()                             
+        "senior": SeniorProfile.objects.filter(circle=circle).first(),
+        "members": circle.memberships.all(),
+        "snapshot": snapshot,
+        "recent": recent,
     }
-    return render(request, "circles/dashboard.html", context)
+    return render(request, "circles/dashboard.html", context)                             
+    
 
 
 @login_required
@@ -93,3 +129,85 @@ def tracker(request, metric):
         "values": values,
     }
     return render(request, "circles/tracker.html", context)
+
+@login_required
+def edit_senior(request):
+    membership = Membership.objects.filter(user=request.user).first()
+    if membership is None:
+        return redirect("/circles/new/")
+    circle = membership.circle
+
+    # The circle's senior, or None if not created yet.
+    senior = SeniorProfile.objects.filter(circle=circle).first()
+
+    if request.method == "POST":
+        name = request.POST["name"]
+        dob = request.POST.get("date_of_birth") or None
+        relationship = request.POST.get("relationship", "")
+        allergies = request.POST.get("allergies", "")
+        about = request.POST.get("about", "")
+
+        if senior is None:
+            # First time → create the profile.
+            SeniorProfile.objects.create(
+                circle=circle, name=name, date_of_birth=dob,
+                relationship=relationship, allergies=allergies, about=about,
+            )
+        else:
+            # Already exists - update the fields and save.
+            senior.name = name
+            senior.date_of_birth = dob
+            senior.relationship = relationship
+            senior.allergies = allergies
+            senior.about = about
+            senior.save()
+
+        return redirect("/dashboard/")
+
+    return render(request, "circles/edit_senior.html", {
+        "circle": circle,
+        "senior": senior,
+    })
+
+@login_required
+def members(request):
+    membership = Membership.objects.filter(user=request.user).first()
+    if membership is None:
+        return redirect("/circles/new/")
+    circle = membership.circle
+    is_owner = (membership.role == "owner")     # the permission flag
+
+    error = ""
+
+    # Only the owner may add or remove people.
+    if request.method == "POST" and is_owner:
+        action = request.POST.get("action")
+
+        if action == "add":
+            email = request.POST.get("email", "").strip().lower()
+            role = request.POST.get("role", "caregiver")
+            person = User.objects.filter(email=email).first()
+
+            if person is None:
+                error = "No account found with that email — ask them to sign up first."
+            elif Membership.objects.filter(user=person, circle=circle).exists():
+                error = "That person is already in this circle."
+            else:
+                Membership.objects.create(user=person, circle=circle, role=role)
+                return redirect("/members/")
+
+        elif action == "remove":
+            Membership.objects.filter(
+                id=request.POST.get("membership_id"),
+                circle=circle,
+            ).exclude(role="owner").delete()      # never remove the owner
+            return redirect("/members/")
+
+    context = {
+        "circle": circle,
+        "members": circle.memberships.all(),
+        "is_owner": is_owner,
+        "add_roles": [c for c in Membership.ROLE_CHOICES if c[0] != "owner"],
+        "error": error,
+    }
+    return render(request, "circles/members.html", context)

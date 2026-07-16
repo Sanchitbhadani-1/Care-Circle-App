@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if senior %}Edit {{ senior.name }}{% else %}Add senior{% endif %} — Care Circle</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="app-body">
+
+    <header class="app-header">
+        <a class="app-brand" href="/dashboard/">Care Circle</a>
+        <nav class="app-nav">
+            <a class="app-nav__link" href="/dashboard/">Dashboard</a>
+            <a class="app-nav__link" href="#">Medications</a>
+            <a class="app-nav__link" href="/track/sleep/">Sleep</a>
+            <a class="app-nav__link" href="#">Meals</a>
+            <a class="app-nav__link" href="#">Tasks</a>
+            <a class="app-nav__link" href="#">Care notes</a>
+            <a class="app-nav__link" href="/members/">Members</a>
+        </nav>
+        <a class="app-logout" href="/logout/">Log out</a>
+    </header>
+
+    <main class="app-main">
+
+        <a class="tracker-back" href="/dashboard/">← Back to dashboard</a>
+
+        <div class="form-card">
+            <h1 class="form-card__title">{% if senior %}Edit senior profile{% else %}Add the senior{% endif %}</h1>
+            <p class="form-card__sub">The person this circle is here to care for.</p>
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                <label class="field">
+                    <span class="field-label">Full name</span>
+                    <input type="text" name="name" value="{{ senior.name|default:'' }}" placeholder="e.g. Rose Bhadani" required>
+                </label>
+
+                <div class="form-row">
+                    <label class="field" style="flex: 1; min-width: 160px;">
+                        <span class="field-label">Date of birth</span>
+                        <input type="date" name="date_of_birth" value="{{ senior.date_of_birth|date:'Y-m-d' }}">
+                    </label>
+                    <label class="field" style="flex: 1; min-width: 160px;">
+                        <span class="field-label">Relationship</span>
+                        <input type="text" name="relationship" value="{{ senior.relationship|default:'' }}" placeholder="e.g. Grandmother">
+                    </label>
+                </div>
+
+                <label class="field">
+                    <span class="field-label">Allergies</span>
+                    <input type="text" name="allergies" value="{{ senior.allergies|default:'' }}" placeholder="e.g. penicillin (leave blank if none)">
+                </label>
+
+                <label class="field">
+                    <span class="field-label">About / current status</span>
+                    <textarea name="about" rows="3" placeholder="A short note on how they're doing">{{ senior.about|default:'' }}</textarea>
+                </label>
+
+                <button type="submit" class="button">{% if senior %}Save changes{% else %}Add senior{% endif %}</button>
+            </form>
+        </div>
+
+    </main>
+
+</body>
+</html>

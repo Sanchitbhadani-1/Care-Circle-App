@@ -28,4 +28,6 @@ urlpatterns = [
     path('circles/new/', circle_views.create_circle), #Go to create a circle page
     path('dashboard/', circle_views.dashboard), #Go to the circle dashboard
     path('track/<str:metric>/', circle_views.tracker), #Reusable tracker
+    path('senior/', circle_views.edit_senior), #Add or edit the senior profile
+    path('members/', circle_views.members), #Manage circle members
 ]

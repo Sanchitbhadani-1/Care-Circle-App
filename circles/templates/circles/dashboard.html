@@ -18,7 +18,7 @@
             <a class="app-nav__link" href="#">Meals</a>
             <a class="app-nav__link" href="#">Tasks</a>
             <a class="app-nav__link" href="#">Care notes</a>
-            <a class="app-nav__link" href="#">Members</a>
+            <a class="app-nav__link" href="/members/">Members</a>
         </nav>
 
         <a class="app-logout" href="/logout/">Log out</a>
@@ -42,6 +42,7 @@
                 <div class="senior-name">{{ senior.name }}<span class="senior-meta">{% if senior.age %} &middot; {{ senior.age }} yrs{% endif %}{% if senior.relationship %} &middot; {{ senior.relationship }}{% endif %}</span></div>
                 <div class="senior-facts">{% if senior.allergies %}Allergies: {{ senior.allergies }}{% else %}No allergies on file{% endif %}{% if senior.about %} &middot; {{ senior.about }}{% endif %}</div>
             </div>
+            <a class="app-chip senior-edit" href="/senior/">Edit</a>
         </section>
         {% else %}
         <section class="senior-card senior-card--empty">
@@ -49,17 +50,23 @@
                 <div class="senior-name">No senior added yet</div>
                 <div class="senior-facts">Add the person this circle is here to care for.</div>
             </div>
-            <a class="app-chip" href="#">Add senior</a>
+            <a class="app-chip" href="/senior/">Add senior</a>
         </section>
         {% endif %}
 
-        <!-- Today's snapshot: values light up as the trackers get built -->
-        <p class="dash-label">Today's snapshot</p>
+        <!-- Latest reading from each tracker (auto-built from your METRICS) -->
+        <p class="dash-label">Latest readings</p>
         <div class="snapshot">
-            <div class="snap-tile"><div class="snap-label">Medications</div><div class="snap-value snap-value--empty">—</div></div>
-            <div class="snap-tile"><div class="snap-label">Sleep</div><div class="snap-value snap-value--empty">—</div></div>
-            <div class="snap-tile"><div class="snap-label">Meals</div><div class="snap-value snap-value--empty">—</div></div>
-            <div class="snap-tile"><div class="snap-label">Hydration</div><div class="snap-value snap-value--empty">—</div></div>
+            {% for s in snapshot %}
+            <a class="snap-tile" href="/track/{{ s.key }}/">
+                <div class="snap-label">{{ s.icon }} {{ s.label }}</div>
+                {% if s.has_value %}
+                <div class="snap-value">{{ s.value }} <span class="snap-unit">{{ s.unit }}</span></div>
+                {% else %}
+                <div class="snap-value snap-value--empty">—</div>
+                {% endif %}
+            </a>
+            {% endfor %}
         </div>
 
         <!-- Recent activity + Care team -->
@@ -67,13 +74,27 @@
 
             <section class="panel">
                 <div class="panel-head"><span class="panel-title">Recent activity</span></div>
-                <p class="empty-state">Nothing logged yet. As caregivers record meds, meals, and notes, they'll appear here.</p>
+                {% if recent %}
+                <div class="activity-list">
+                    {% for a in recent %}
+                    <div class="activity">
+                        <span class="activity-icon">{{ a.icon }}</span>
+                        <div class="activity-text">
+                            <span class="activity-main">{{ a.label }}: {{ a.value }} {{ a.unit }}</span>
+                            <span class="activity-meta">{{ a.by }} &middot; {{ a.at|timesince }} ago</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="empty-state">Nothing logged yet. As caregivers record sleep, hydration, and more, it'll show up here.</p>
+                {% endif %}
             </section>
 
             <section class="panel">
                 <div class="panel-head">
                     <span class="panel-title">Care team</span>
-                    <a class="app-chip" href="#">+ Invite</a>
+                    <a class="app-chip" href="/members/">+ Invite</a>
                 </div>
                 <div class="member-list">
                     {% for m in members %}

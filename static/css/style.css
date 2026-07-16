@@ -99,9 +99,13 @@ h1 { color: var(--primary); margin-top: 0; }
     background-color: var(--primary);
     color: white;
     padding: 12px 22px;
+    border: none;                /* <button> ships with a default border — remove it */
     border-radius: 10px;
     text-decoration: none;
+    font-family: inherit;        /* buttons don't inherit the page font on their own */
+    font-size: inherit;
     font-weight: 600;
+    cursor: pointer;             /* show the hand cursor on real buttons */
     margin: 8px 6px 0 0;
     transition: background-color 0.2s ease;
 }
@@ -473,7 +477,8 @@ h1 { color: var(--primary); margin-top: 0; }
     color: var(--text);
     margin-bottom: 6px;
 }
-.field input {
+.field input,
+.field textarea {
     width: 100%;
     box-sizing: border-box;      /* padding stays inside the width */
     padding: 12px 14px;
@@ -485,7 +490,9 @@ h1 { color: var(--primary); margin-top: 0; }
     border-radius: 10px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.field input:focus {
+.field textarea { resize: vertical; }
+.field input:focus,
+.field textarea:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(63, 111, 156, 0.18);   /* soft focus ring */
@@ -707,15 +714,22 @@ h1 { color: var(--primary); margin-top: 0; }
 }
 .snapshot {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 14px;
     margin-bottom: 36px;
 }
 .snap-tile {
+    display: block;
     background-color: var(--card-bg);
     border-radius: 12px;
     box-shadow: var(--shadow);
     padding: 18px;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.snap-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(63, 111, 156, 0.18);
 }
 .snap-label {
     font-size: 13px;
@@ -727,6 +741,12 @@ h1 { color: var(--primary); margin-top: 0; }
     font-size: 24px;
     font-weight: 600;
     color: var(--text);
+}
+.snap-unit {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--muted);
 }
 .snap-value--empty { color: #c2ccd6; }
 
@@ -771,6 +791,34 @@ h1 { color: var(--primary); margin-top: 0; }
     color: var(--muted);
     line-height: 1.6;
     margin: 0;
+}
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.activity {
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+}
+.activity-icon {
+    font-size: 18px;
+    line-height: 1.4;
+    flex: 0 0 auto;
+}
+.activity-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.activity-main {
+    font-size: 14px;
+    color: var(--text);
+}
+.activity-meta {
+    font-size: 12px;
+    color: var(--muted);
 }
 .member-list {
     display: flex;
@@ -915,4 +963,76 @@ h1 { color: var(--primary); margin-top: 0; }
 .chart-canvas-wrap {
     position: relative;   /* Chart.js sizes the canvas to this box */
     height: 260px;
+}
+
+/* In-app form card (senior add/edit, etc.) */
+.form-card {
+    max-width: 560px;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px;
+}
+.form-card__title {
+    font-size: 24px;
+    color: var(--text);
+    margin: 0 0 6px 0;
+}
+.form-card__sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0 0 24px 0;
+}
+.form-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+.senior-edit { margin-left: auto; }
+
+/* Members page */
+.field select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text);
+    background-color: #f7fafc;
+    border: 1px solid #d6dee6;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.member-remove-form { margin: 0; }
+.btn-remove {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin: 0;
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+.btn-remove:hover {
+    color: #b3261e;
+    background-color: #fdecea;
+}
+.add-member { margin-top: 24px; }
+.add-member-form {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+.add-member-form .field { margin-bottom: 0; }
+.add-member-form .button { margin: 0; }
+.add-member-form__email { flex: 2; min-width: 220px; }
+.add-member-form__role  { flex: 1; min-width: 140px; }
+.add-member-hint {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 12px 0 0 0;
 }
