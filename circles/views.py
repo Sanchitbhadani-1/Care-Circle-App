@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import CareCircle, Membership, SeniorProfile, LogEntry
+from .models import CareCircle, Membership, SeniorProfile, LogEntry, CareNote
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from django.contrib.auth import get_user_model
@@ -185,7 +185,6 @@ def members(request):
 
         if action == "add":
             email = request.POST.get("email", "").strip().lower()
-            role = request.POST.get("role", "caregiver")
             person = User.objects.filter(email=email).first()
 
             if person is None:
@@ -193,7 +192,8 @@ def members(request):
             elif Membership.objects.filter(user=person, circle=circle).exists():
                 error = "That person is already in this circle."
             else:
-                Membership.objects.create(user=person, circle=circle, role=role)
+                # New members are always caregivers (owner is fixed; senior is a profile).
+                Membership.objects.create(user=person, circle=circle, role="caregiver")
                 return redirect("/members/")
 
         elif action == "remove":
@@ -207,7 +207,23 @@ def members(request):
         "circle": circle,
         "members": circle.memberships.all(),
         "is_owner": is_owner,
-        "add_roles": [c for c in Membership.ROLE_CHOICES if c[0] != "owner"],
         "error": error,
     }
     return render(request, "circles/members.html", context)
+
+
+@login_required
+def care_notes(request):
+    membership = Membership.objects.filter(user=request.user).first()
+    if membership is None:
+        return redirect("/circles/new/")
+    circle = membership.circle
+
+    if request.method == "POST":
+        body = request.POST.get("body", "").strip()
+        if body:                     # ignore empty submissions
+            CareNote.objects.create(circle=circle, body=body, author=request.user)
+        return redirect("/notes/")
+
+    notes = circle.notes.all()       # reverse accessor from related_name="notes"
+    return render(request, "circles/care_notes.html", {"circle": circle, "notes": notes})

@@ -104,3 +104,20 @@ class LogEntry(models.Model):
 
     def __str__(self):
         return f"{self.metric} = {self.value} ({self.circle.name})"
+    
+class CareNote(models.Model):
+    circle = models.ForeignKey(CareCircle, on_delete=models.CASCADE, related_name="notes")
+    body = models.TextField()
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,   # keep the note even if the author's account is deleted
+        null=True,
+        related_name="care_notes",
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["-created_at"]   # newest first
+
+    def __str__(self):
+        return f"Note by {self.author} in {self.circle.name}"

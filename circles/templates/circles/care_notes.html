@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Care notes — Care Circle</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="app-body">
+
+    {% include "circles/_app_nav.html" with active="notes" %}
+
+    <main class="app-main">
+
+        <p class="app-eyebrow">{{ circle.name }}</p>
+        <h1 class="app-welcome">Care notes</h1>
+        <p class="app-sub">A shared log — leave a note for the next caregiver.</p>
+
+        <!-- Post a new note -->
+        <form method="post" class="note-form">
+            {% csrf_token %}
+            <textarea name="body" rows="3" placeholder="What should the team know? e.g. {{ circle.senior.name|default:'they' }} barely ate lunch and seemed tired today." required></textarea>
+            <button type="submit" class="button">Post note</button>
+        </form>
+
+        <!-- The feed (newest first) -->
+        {% if notes %}
+        <div class="note-feed">
+            {% for note in notes %}
+            <article class="note">
+                <div class="note-head">
+                    <span class="note-author">{{ note.author.email|default:"Someone" }}</span>
+                    <span class="note-time">{{ note.created_at|date:"M j, Y · g:i A" }}</span>
+                </div>
+                <p class="note-body">{{ note.body|linebreaksbr }}</p>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty-state">No notes yet — post the first one above.</p>
+        {% endif %}
+
+    </main>
+
+</body>
+</html>

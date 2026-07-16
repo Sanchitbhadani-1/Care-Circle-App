@@ -7,22 +7,7 @@
 </head>
 <body class="app-body">
 
-    <!-- App top bar (same as the dashboard) -->
-    <header class="app-header">
-        <a class="app-brand" href="/dashboard/">Care Circle</a>
-
-        <nav class="app-nav">
-            <a class="app-nav__link" href="/dashboard/">Dashboard</a>
-            <a class="app-nav__link" href="#">Medications</a>
-            <a class="app-nav__link {% if metric == 'sleep' %}active{% endif %}" href="/track/sleep/">Sleep</a>
-            <a class="app-nav__link" href="#">Meals</a>
-            <a class="app-nav__link" href="#">Tasks</a>
-            <a class="app-nav__link" href="#">Care notes</a>
-            <a class="app-nav__link" href="/members/">Members</a>
-        </nav>
-
-        <a class="app-logout" href="/logout/">Log out</a>
-    </header>
+    {% include "circles/_app_nav.html" with active=metric %}
 
     <main class="app-main">
 

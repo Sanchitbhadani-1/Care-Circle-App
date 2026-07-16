@@ -7,19 +7,7 @@
 </head>
 <body class="app-body">
 
-    <header class="app-header">
-        <a class="app-brand" href="/dashboard/">Care Circle</a>
-        <nav class="app-nav">
-            <a class="app-nav__link" href="/dashboard/">Dashboard</a>
-            <a class="app-nav__link" href="#">Medications</a>
-            <a class="app-nav__link" href="/track/sleep/">Sleep</a>
-            <a class="app-nav__link" href="#">Meals</a>
-            <a class="app-nav__link" href="#">Tasks</a>
-            <a class="app-nav__link" href="#">Care notes</a>
-            <a class="app-nav__link active" href="/members/">Members</a>
-        </nav>
-        <a class="app-logout" href="/logout/">Log out</a>
-    </header>
+    {% include "circles/_app_nav.html" with active="members" %}
 
     <main class="app-main">
 
@@ -63,15 +51,7 @@
                     <span class="field-label">Their email</span>
                     <input type="email" name="email" placeholder="caregiver@example.com" required>
                 </label>
-                <label class="field add-member-form__role">
-                    <span class="field-label">Role</span>
-                    <select name="role">
-                        {% for value, label in add_roles %}
-                        <option value="{{ value }}">{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                </label>
-                <button type="submit" class="button">Add member</button>
+                <button type="submit" class="button">Add caregiver</button>
             </form>
             <p class="add-member-hint">They'll need a Care Circle account with that email already.</p>
         </section>

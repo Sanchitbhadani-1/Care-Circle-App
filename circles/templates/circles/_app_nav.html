@@ -1,0 +1,17 @@
+<header class="app-header">
+    <a class="app-brand" href="/dashboard/">Care Circle</a>
+
+    <nav class="app-nav">
+        <a class="app-nav__link {% if active == 'dashboard' %}active{% endif %}" href="/dashboard/">Dashboard</a>
+        <a class="app-nav__link {% if active == 'medications' %}active{% endif %}" href="#">Medications</a>
+        <a class="app-nav__link {% if active == 'sleep' %}active{% endif %}" href="/track/sleep/">Sleep</a>
+        <a class="app-nav__link {% if active == 'hydration' %}active{% endif %}" href="/track/hydration/">Hydration</a>
+        <a class="app-nav__link {% if active == 'weight' %}active{% endif %}" href="/track/weight/">Weight</a>
+        <a class="app-nav__link {% if active == 'meals' %}active{% endif %}" href="#">Meals</a>
+        <a class="app-nav__link {% if active == 'tasks' %}active{% endif %}" href="#">Tasks</a>
+        <a class="app-nav__link {% if active == 'notes' %}active{% endif %}" href="/notes/">Care notes</a>
+        <a class="app-nav__link {% if active == 'members' %}active{% endif %}" href="/members/">Members</a>
+    </nav>
+
+    <a class="app-logout" href="/logout/">Log out</a>
+</header>

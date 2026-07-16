@@ -30,4 +30,5 @@ urlpatterns = [
     path('track/<str:metric>/', circle_views.tracker), #Reusable tracker
     path('senior/', circle_views.edit_senior), #Add or edit the senior profile
     path('members/', circle_views.members), #Manage circle members
+    path('notes/', circle_views.care_notes), #Care notes / handoff log
 ]
