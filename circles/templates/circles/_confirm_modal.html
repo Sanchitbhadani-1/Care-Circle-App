@@ -1,0 +1,45 @@
+<!-- Shared confirm-delete modal. Auto-wires any <form class="delete-form"> on the page. -->
+<div id="confirm-modal" class="modal-overlay" hidden>
+    <div class="modal">
+        <p class="modal-msg">Are you sure you want to delete this <span id="modal-label">entry</span>?</p>
+        <p class="modal-sub">This can't be undone.</p>
+        <div class="modal-actions">
+            <button type="button" class="button secondary" id="modal-cancel">Cancel</button>
+            <button type="button" class="modal-delete" id="modal-confirm">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const modal = document.getElementById("confirm-modal");
+        const label = document.getElementById("modal-label");
+        let pendingForm = null;
+
+        // Every delete form: intercept its submit and show the modal first.
+        document.querySelectorAll(".delete-form").forEach(function (form) {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                pendingForm = form;
+                label.textContent = form.dataset.label || "entry";
+                modal.hidden = false;
+            });
+        });
+
+        function closeModal() {
+            modal.hidden = true;
+            pendingForm = null;
+        }
+
+        // Cancel, or click the dark backdrop, to close without deleting.
+        document.getElementById("modal-cancel").addEventListener("click", closeModal);
+        modal.addEventListener("click", function (e) {
+            if (e.target === modal) closeModal();
+        });
+
+        // Confirm: actually submit the form → the server deletes it.
+        document.getElementById("modal-confirm").addEventListener("click", function () {
+            if (pendingForm) pendingForm.submit();
+        });
+    })();
+</script>

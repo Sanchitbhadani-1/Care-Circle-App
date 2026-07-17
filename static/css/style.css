@@ -1145,7 +1145,24 @@ h1 { color: var(--primary); margin-top: 0; }
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 16px;
+}
+.dose-when {
+    box-sizing: border-box;
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text);
+    background-color: #f7fafc;
+    border: 1px solid #d6dee6;
+    border-radius: 10px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.dose-when:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(63, 111, 156, 0.18);
 }
 .dose-amount {
     width: 120px;
@@ -1180,7 +1197,7 @@ h1 { color: var(--primary); margin-top: 0; }
 }
 .dose-row {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     gap: 12px;
     padding: 3px 0;
     font-size: 13px;
@@ -1188,3 +1205,75 @@ h1 { color: var(--primary); margin-top: 0; }
 .dose-amount-val { color: var(--text); font-weight: 600; }
 .dose-meta { color: var(--muted); white-space: nowrap; }
 .dose-none { font-size: 13px; color: var(--muted); }
+
+/* Delete: red trash button + confirm modal */
+.delete-form { margin: 0 0 0 auto; }          /* push the trash to the right */
+.trash-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #d64545;                            /* red trash icon */
+    padding: 5px;
+    border-radius: 8px;
+    line-height: 0;
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+.trash-btn:hover {
+    color: #b93838;
+    background-color: #fdecea;
+}
+.trash-btn svg { display: block; }
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(31, 45, 61, 0.5);         /* dims the page behind */
+}
+.modal-overlay[hidden] { display: none; }      /* override [hidden] so it stays hidden */
+.modal {
+    width: 100%;
+    max-width: 380px;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    padding: 28px;
+    text-align: center;
+}
+.modal-msg {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 6px 0;
+}
+.modal-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 22px 0;
+}
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.modal-actions .button { margin: 0; }
+.modal-delete {
+    background-color: #d64545;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.modal-delete:hover { background-color: #b93838; }

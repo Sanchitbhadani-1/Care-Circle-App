@@ -98,6 +98,17 @@ def tracker(request, metric):
 
     # If they submitted the form, save a new entry.
     if request.method == "POST":
+
+        # Delete an entry?
+        if request.POST.get("action") == "delete":
+            LogEntry.objects.filter(
+                id=request.POST.get("entry_id"),
+                circle=circle,          # scope to this circle...
+                metric=metric,          # ...and this metric, for safety
+            ).delete()
+            return redirect(f"/track/{metric}/")
+        
+
         # Use the date/time the user picked; fall back to now if it's blank.
         when = parse_datetime(request.POST.get("logged_at", ""))
         if when is None:
@@ -192,7 +203,7 @@ def members(request):
             elif Membership.objects.filter(user=person, circle=circle).exists():
                 error = "That person is already in this circle."
             else:
-                # New members are always caregivers (owner is fixed; senior is a profile).
+                # New members are always family members (owner is fixed; senior is a profile).
                 Membership.objects.create(user=person, circle=circle, role="caregiver")
                 return redirect("/members/")
 
@@ -256,7 +267,21 @@ def medications(request):
             ).first()
             if med:
                 amount = request.POST.get("amount_given", "").strip() or med.dosage
-                DoseLog.objects.create(medication=med, given_by=request.user, amount_given=amount)
+
+                when = parse_datetime(request.POST.get("given_at", ""))
+                if when is None:
+                    when = timezone.now()
+                elif timezone.is_naive(when):
+                    when = timezone.make_aware(when)
+
+                DoseLog.objects.create(medication=med, given_by=request.user, amount_given=amount, given_at=when)
+
+        elif action == "delete_dose":
+            DoseLog.objects.filter(
+                id=request.POST.get("dose_id"),
+                medication__circle=circle,   # dose → its medication → the circle
+            ).delete()
+            return redirect("/medications/")
         return redirect("/medications/")
 
     meds = circle.medications.filter(is_active=True)  # only active meds
