@@ -13,12 +13,12 @@
 
         <p class="app-eyebrow">{{ circle.name }}</p>
         <h1 class="app-welcome">Care notes</h1>
-        <p class="app-sub">A shared log — leave a note for the next caregiver.</p>
+        <p class="app-sub">Share updates so the whole family stays in the loop.</p>
 
         <!-- Post a new note -->
         <form method="post" class="note-form">
             {% csrf_token %}
-            <textarea name="body" rows="3" placeholder="What should the team know? e.g. {{ circle.senior.name|default:'they' }} barely ate lunch and seemed tired today." required></textarea>
+            <textarea name="body" rows="3" placeholder="What's the latest? e.g. {{ circle.senior.name|default:'they' }} barely ate lunch and seemed tired today." required></textarea>
             <button type="submit" class="button">Post note</button>
         </form>
 

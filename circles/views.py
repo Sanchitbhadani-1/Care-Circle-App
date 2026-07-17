@@ -203,8 +203,11 @@ def members(request):
             elif Membership.objects.filter(user=person, circle=circle).exists():
                 error = "That person is already in this circle."
             else:
-                # New members are always family members (owner is fixed; senior is a profile).
-                Membership.objects.create(user=person, circle=circle, role="caregiver")
+                # Join as family by default; the owner can mark them a caregiver.
+                role = request.POST.get("role", "family")
+                if role not in ("caregiver", "family"):
+                    role = "family"          # ignore anything sketchy (e.g. "owner")
+                Membership.objects.create(user=person, circle=circle, role=role)
                 return redirect("/members/")
 
         elif action == "remove":

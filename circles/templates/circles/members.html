@@ -13,11 +13,11 @@
 
         <p class="app-eyebrow">{{ circle.name }}</p>
         <h1 class="app-welcome">Members</h1>
-        <p class="app-sub">Everyone helping care for this circle.</p>
+        <p class="app-sub">The family connected to {{ circle.senior.name|default:"this circle" }}.</p>
 
-        <!-- The care team list -->
+        <!-- The family list -->
         <section class="panel">
-            <div class="panel-head"><span class="panel-title">Care team</span></div>
+            <div class="panel-head"><span class="panel-title">Family</span></div>
             <div class="member-list">
                 {% for m in members %}
                 <div class="member">
@@ -49,9 +49,16 @@
                 <input type="hidden" name="action" value="add">
                 <label class="field add-member-form__email">
                     <span class="field-label">Their email</span>
-                    <input type="email" name="email" placeholder="caregiver@example.com" required>
+                    <input type="email" name="email" placeholder="family@example.com" required>
                 </label>
-                <button type="submit" class="button">Add caregiver</button>
+                <label class="field add-member-form__role">
+                    <span class="field-label">Role</span>
+                    <select name="role">
+                        <option value="family">Family member</option>
+                        <option value="caregiver">Caregiver</option>
+                    </select>
+                </label>
+                <button type="submit" class="button">Add member</button>
             </form>
             <p class="add-member-hint">They'll need a Care Circle account with that email already.</p>
         </section>

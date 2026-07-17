@@ -27,7 +27,7 @@ class Membership(models.Model): #Defines the membership model
     ROLE_CHOICES = [
         ("owner", "Owner"),
         ("caregiver", "Caregiver"),
-        ("senior", "Senior"),
+        ("family", "Family member"),
     ]
 
     #Connects the user
@@ -45,7 +45,7 @@ class Membership(models.Model): #Defines the membership model
     )
 
     #Assigns user's role in the circle
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="caregiver")
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="family")
 
     class Meta:
         unique_together = ("user", "circle")   # no duplicate user+circle rows
